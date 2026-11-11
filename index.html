@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yudstoree – Game Top Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030c24;--deep:#06205a;--sea:#0b4fb3;--aqua:#3fd8ff;--foam:#c7f5ff;--gold:#ffe7a1;--ink:#eaf6ff;--mute:#9fb8d8;--card:rgba(10,40,100,.45);--line:rgba(120,200,255,.25);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:radial-gradient(120% 80% at 50% 0%,#0a2d73 0%,var(--bg) 60%);color:var(--ink);font:400 16px/1.55 Figtree,system-ui,sans-serif;min-height:100vh}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{display:flex;align-items:center;gap:10px;font:700 20px Unbounded,sans-serif;color:var(--ink);text-decoration:none}
+.logo svg{width:28px;height:28px}
+nav a{color:var(--mute);text-decoration:none;margin-left:20px;font-weight:500}
+nav a:hover,nav a:focus-visible{color:var(--aqua)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--aqua);outline-offset:3px}
+.hero{padding:56px 0 130px;text-align:center;position:relative}
+.hero h1{font:700 clamp(44px,11vw,104px)/1 Unbounded,sans-serif;margin:0;letter-spacing:-.02em;background:linear-gradient(180deg,#fff 10%,var(--aqua) 60%,var(--sea));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 60px rgba(63,216,255,.35)}
+.hero p{max-width:520px;margin:18px auto 28px;color:var(--mute);font-size:18px}
+.btn{display:inline-block;border:0;border-radius:999px;padding:14px 28px;font:700 16px Figtree,sans-serif;color:#021433;background:linear-gradient(135deg,var(--foam),var(--aqua));cursor:pointer;text-decoration:none;box-shadow:0 8px 30px rgba(63,216,255,.35)}
+.btn:hover{filter:brightness(1.08)}
+.btn.wa{background:linear-gradient(135deg,#25d366,#128c4a);color:#fff;box-shadow:0 8px 30px rgba(37,211,102,.3)}
+.waves{position:absolute;left:50%;bottom:-1px;width:100vw;transform:translateX(-50%);height:110px;overflow:hidden;pointer-events:none}
+.waves svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.w1{animation:drift 14s linear infinite;opacity:.55}
+.w2{animation:drift 22s linear infinite reverse;opacity:.8}
+@keyframes drift{to{transform:translateX(-50%)}}
+section{padding:36px 0}
+h2{font:700 clamp(22px,4vw,32px) Unbounded,sans-serif;margin:0 0 6px}
+.sub{color:var(--mute);margin:0 0 22px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tab{display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:14px;border:1px solid transparent;background:none;color:var(--mute);font:700 16px Figtree,sans-serif;cursor:pointer}
+.tab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected=true]{background:linear-gradient(135deg,var(--foam),var(--aqua));color:#021433;box-shadow:0 8px 24px rgba(63,216,255,.3)}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.game{background:rgba(2,12,36,.45);border:1px solid var(--line);border-radius:20px;padding:18px;color:var(--ink);text-align:left;cursor:pointer;font:inherit;transition:border-color .2s,transform .2s}
+.game[aria-pressed=true]{border-color:var(--aqua);box-shadow:0 0 0 1px var(--aqua),0 10px 40px rgba(63,216,255,.2)}
+.game:hover{transform:translateY(-3px)}
+.badge{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font:700 17px Unbounded,sans-serif;color:#021433;margin-bottom:12px}
+.b-ml{background:linear-gradient(135deg,#ffe7a1,#ffb347)}.b-rb{background:linear-gradient(135deg,#c7f5ff,#5aa2ff)}.b-fc{background:linear-gradient(135deg,#b6ffd9,#3fd8ff)}
+.game b{display:block;font-size:18px}.game span{color:var(--mute);font-size:14px}
+.order{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+@media(max-width:820px){.order{grid-template-columns:1fr}nav{display:none}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;backdrop-filter:blur(6px)}
+.step{display:flex;align-items:center;gap:10px;font:700 17px Unbounded,sans-serif;margin:0 0 14px}
+.step i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--aqua);color:#021433;font-size:14px}
+.panel+.panel{margin-top:20px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+label{display:block;font-size:14px;color:var(--mute);margin-bottom:6px}
+input,select{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(2,12,36,.7);color:var(--ink);font:inherit}
+.packs{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.pack{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(2,12,36,.55);color:var(--ink);cursor:pointer;text-align:left;font:inherit}
+.pack[aria-pressed=true]{border-color:var(--gold);background:rgba(255,231,161,.1)}
+.pack b{display:block;font-size:20px}.pack span{color:var(--aqua);font-size:14px}
+.sum{position:sticky;top:16px}
+.sum dl{margin:0 0 16px}.sum div{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.sum dt{color:var(--mute)}.sum dd{margin:0;text-align:right;font-weight:700}
+.total dd{color:var(--gold);font-size:20px}
+.sum .btn{width:100%}
+.note{margin:12px 0 0;font-size:13px;color:var(--mute);text-align:center}
+#msg{margin-top:10px;font-size:14px;color:var(--foam)}
+#msg.err{color:#ffb4b4}
+.perks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.perks p{margin:4px 0 0;color:var(--mute)}
+footer{position:relative;z-index:1;text-align:center;color:var(--mute);padding:40px 20px 50px;font-size:14px;background:linear-gradient(180deg,transparent,rgba(11,79,179,.35))}
+@media(prefers-reduced-motion:reduce){.w1,.w2{animation:none}html{scroll-behavior:auto}.game{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="wrap">
+  <header>
+    <a class="logo" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.7 7.3L22 11l-7.3 2.7L12 21l-2.7-7.3L2 11l7.3-2.7z" fill="#ffe7a1"/></svg>Yudstoree</a>
+    <nav><a href="#order">Order</a><a href="#why">Why us</a></nav>
+  </header>
+  <div class="hero" id="top">
+    <h1>Yudstoree</h1>
+    <p>Top up games, e-wallet balance and PLN tokens in a few taps. Pick a service, enter your details, order on WhatsApp.</p>
+    <a class="btn" href="#order">Start order</a>
+    <div class="waves" aria-hidden="true">
+      <svg class="w1" viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0 50 Q180 10 360 50 T720 50 T1080 50 T1440 50 V110 H0Z" fill="#0b4fb3"/></svg>
+      <svg class="w2" viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0 70 Q180 30 360 70 T720 70 T1080 70 T1440 70 V110 H0Z" fill="#06205a"/></svg>
+    </div>
+  </div>
+
+  <section id="order">
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="order">
+      <div>
+        <div class="panel">
+          <h3 class="step"><i>1</i>Pilih Layanan / Produk</h3>
+          <div class="games" id="gameList"></div>
+        </div>
+        <div class="panel">
+          <h3 class="step"><i>2</i>Data Tujuan</h3>
+          <div class="fields" id="fields"></div>
+        </div>
+        <div class="panel">
+          <h3 class="step"><i>3</i>Pilih Nominal</h3>
+          <div class="packs" id="packs"></div>
+        </div>
+      </div>
+      <aside class="panel sum">
+        <h3 class="step" style="margin-bottom:6px">Ringkasan Pesanan</h3>
+        <dl>
+          <div><dt>Layanan</dt><dd id="sGame">–</dd></div>
+          <div><dt>Tujuan</dt><dd id="sAcc">–</dd></div>
+          <div><dt>Nominal</dt><dd id="sPack">–</dd></div>
+          <div class="total"><dt>Total Bayar</dt><dd id="sTotal">Rp 0</dd></div>
+        </dl>
+        <button class="btn wa" id="go">Beli Via WhatsApp</button>
+        <p class="note">Pesanan langsung dikirim ke WhatsApp CS Yudstoree</p>
+        <p id="msg" role="status"></p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="why">
+    <h2>Why Yudstoree</h2>
+    <p class="sub">Simple top up, clear prices.</p>
+    <div class="perks">
+      <div class="panel"><b>Fast delivery</b><p>Most orders reach your account within minutes.</p></div>
+      <div class="panel"><b>Clear prices</b><p>You see the full total before you pay.</p></div>
+      <div class="panel"><b>Local payments</b><p>Pay with QRIS, e-wallets or bank transfer.</p></div>
+    </div>
+  </section>
+</div>
+<footer>© 2026 Yudstoree. Not affiliated with Moonton, Roblox or EA.</footer>
+
+<script>
+const WA='6283865361342'; /* change to your WhatsApp number, format 62xxxxxxxxxx */
+const mk=(a,fee)=>a.map(n=>[n.toLocaleString('id-ID'),n+fee]);
+const EW=[['dana','DANA','DA','b-ml'],['gopay','GoPay','GO','b-rb'],['ovo','OVO','OV','b-fc'],['shopeepay','ShopeePay','SP','b-ml']];
+const T={
+ game:{label:'Top Up Game',ico:'<path d="M6 11h4M8 9v4M15 12h.01M18 10h.01M17.3 5H6.7a4 4 0 00-3.9 3.3L2 14a3 3 0 005.4 1.9L8 15h8l.6.9A3 3 0 0022 14l-.8-5.7A4 4 0 0017.3 5z"/>',items:{
+  ml:{n:'Mobile Legends',s:'Diamonds for skins and passes',b:'ML',c:'b-ml',u:'Diamonds',f:[['User ID','12345678'],['Zone ID','1234']],p:[[5,2635],[19,6920],[36,13533],[44,15130],[59,19060],[85,26530],[222,68288],[370,111986],['WDP',32000,'WDP'],['Starlight D8-D10',40000,'Starlight D8-D10']]},
+  rb:{n:'Roblox',s:'Robux for items and passes',b:'RB',c:'b-rb',u:'Robux',f:[['Roblox username','yourname']],p:[[10,3000],[100,16000],[500,75500],[1000,149200]]},
+  fc:{n:'FC Mobile',s:'FC Points for packs and players',b:'FC',c:'b-fc',u:'FC Points',f:[['Player ID','your player ID']],p:[[40,10000],[100,22000],[520,102000],[1070,202000]]}}},
+ ewallet:{label:'Isi Saldo E-Wallet',ico:'<path d="M20 12V8H6a2 2 0 010-4h12v4M4 6v12a2 2 0 002 2h14v-4M18 12a2 2 0 000 4h4v-4z"/>',items:Object.fromEntries(EW.map(([k,n,b,c])=>[k,{n,s:'E-Wallet',b,c,u:'Saldo',f:[['Nomor HP e-wallet','08123456789']],p:[['10.000',13000],['20.000',23000],['50.000',53000],['100.000',102500],['200.000',202500]]}]))},
+ pln:{label:'Token Listrik PLN',ico:'<path d="M13 2L3 14h9l-1 8 10-12h-9z"/>',items:{pln:{n:'Token PLN Prabayar',s:'Token listrik',b:'PL',c:'b-rb',u:'Token',f:[['Nomor meter / ID pelanggan','12345678901']],p:[['20.000',23000],['50.000',53000],['100.000',103000],['200.000',203000]]}}}
+};
+const rp=n=>'Rp '+n.toLocaleString('id-ID');
+const $=id=>document.getElementById(id);
+let tab='game',cur='ml',pack=null;
+const S0=()=>T[tab].items[cur];
+function renderTabs(){
+  $('tabs').innerHTML=Object.entries(T).map(([k,t])=>`<button class="tab" role="tab" data-k="${k}" aria-selected="${k===tab}"><svg viewBox="0 0 24 24" aria-hidden="true">${t.ico}</svg>${t.label}</button>`).join('');
+  $('tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{tab=b.dataset.k;cur=Object.keys(T[tab].items)[0];pack=null;renderAll();});
+}
+function renderGames(){
+  $('gameList').innerHTML=Object.entries(T[tab].items).map(([k,g])=>`<button class="game" data-k="${k}" aria-pressed="${k===cur}"><div class="badge ${g.c}">${g.b}</div><b>${g.n}</b><span>${g.s}</span></button>`).join('');
+  $('gameList').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=b.dataset.k;pack=null;renderAll();});
+}
+function renderFields(){
+  $('fields').innerHTML=S0().f.map((f,i)=>`<div><label for="f${i}">${f[0]}</label><input id="f${i}" placeholder="${f[1]}" autocomplete="off"></div>`).join('');
+  $('fields').querySelectorAll('input').forEach(i=>i.oninput=summary);
+}
+function renderPacks(){
+  const g=S0();
+  $('packs').innerHTML=g.p.map((p,i)=>`<button class="pack" data-i="${i}" aria-pressed="${pack===i}"><b>${typeof p[0]==='number'?p[0].toLocaleString('id-ID'):p[0]}</b><span>${typeof p[0]==='number'?g.u+' · ':''}${rp(p[1])}</span></button>`).join('');
+  $('packs').querySelectorAll('button').forEach(b=>b.onclick=()=>{pack=+b.dataset.i;renderPacks();summary();});
+}
+function packLabel(g){const p=g.p[pack];if(p[2])return p[2];return (typeof p[0]==='number'?p[0].toLocaleString('id-ID')+' '+g.u:g.u+' '+p[0]);}
+function ids(){return [...$('fields').querySelectorAll('input')].map(i=>i.value.trim()).filter(Boolean);}
+function summary(){
+  const g=S0(),d=ids();
+  $('sGame').textContent=g.n;
+  $('sAcc').textContent=d.length?d.join(' / '):'–';
+  $('sPack').textContent=pack===null?'–':packLabel(g);
+  $('sTotal').textContent=pack===null?'Rp 0':rp(g.p[pack][1]);
+}
+function renderAll(){renderTabs();renderGames();renderFields();renderPacks();summary();$('msg').textContent='';}
+$('go').onclick=()=>{
+  const g=S0(),m=$('msg');
+  m.className='';
+  if(ids().length<g.f.length){m.className='err';m.textContent='Isi '+g.f.map(f=>f[0]).join(' dan ')+' dulu.';return;}
+  if(pack===null){m.className='err';m.textContent='Pilih nominal dulu.';return;}
+  const t=`Halo Yudstoree, saya mau order:\nLayanan: ${g.n}\nTujuan: ${ids().join(' / ')}\nNominal: ${packLabel(g)}\nTotal Bayar: ${rp(g.p[pack][1])}`;
+  m.textContent='Membuka WhatsApp…';
+  window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(t),'_blank','noopener');
+};
+renderAll();
+
+/* starry sky */
+const cv=$('sky'),cx=cv.getContext('2d');let S=[],W,H;
+const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight;S=Array.from({length:Math.round(W*H/7000)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,p:Math.random()*6.28,s:Math.random()*.02+.005}));}
+function draw(t){cx.clearRect(0,0,W,H);for(const s of S){const a=.45+.55*Math.sin(s.p+t*s.s*.1);cx.globalAlpha=a;cx.fillStyle=s.r>1.2?'#ffe7a1':'#dff6ff';cx.beginPath();cx.arc(s.x,s.y,s.r,0,6.28);cx.fill();}
+  if(!still)requestAnimationFrame(draw);}
+addEventListener('resize',()=>{size();if(still)draw(0);});
+size();draw(0);
+</script>
+</body>
+</html>
